@@ -1,0 +1,64 @@
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 252px);
+
+  max-height: 0px;
+  visibility: hidden;
+  pointer-events: none;
+
+  &.active {
+    max-height: unset;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+.column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transition: 1s;
+
+  @for $i from 1 through 7 {
+    $fator: 160;
+
+    @if $i < 5 {
+      @if $i == 1 {
+        &:nth-child(#{$i}) {
+          margin-top: 0px;
+          transition-delay: $columns-transition-delay * 0;
+        }
+      } @else {
+        &:nth-child(#{$i}) {
+          margin-top: $fator * ($i - 1) + px;
+          transition-delay: $columns-transition-delay * ($i - 1);
+        }
+      }
+    } @else {
+      &:nth-child(#{$i}) {
+        margin-top: $fator * (7 - $i) + px;
+        transition-delay: $columns-transition-delay * ($i - 1)
+      }
+    }
+  }
+}
+
+.item {
+  width: 236px;
+  height: 350px;
+  background: $red;
+  border-radius: 10px;
+}
+
+.item:not(:first-child) {
+  margin-top: 16px;
+}
